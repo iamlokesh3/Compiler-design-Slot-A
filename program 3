@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#define MAX_LENGTH 100
+void removeWhitespaceAndComments(char *line) 
+{
+    int i = 0, j = 0;
+    int inComment = 0;
+    char cleaned[MAX_LENGTH];
+    while (line[i] != '\0') {
+        if (line[i] == '/' && line[i + 1] == '/') 
+		{
+            break;
+        }
+        if (line[i] == '/' && line[i + 1] == '*') 
+		{
+            inComment = 1;
+            i += 2;
+            continue;
+        }
+        if (inComment && line[i] == '*' && line[i + 1] == '/') 
+		{
+            inComment = 0;
+            i += 2;
+            continue;
+        }
+        if (!inComment && !isspace(line[i])) 
+		{
+            cleaned[j++] = line[i];
+        }
+        i++;
+    }
+    cleaned[j] = '\0';
+    printf("Processed Line: %s\n", cleaned);
+}
+int main() 
+{
+    char input[MAX_LENGTH];
+    printf("Enter a line: ");
+    fgets(input, MAX_LENGTH, stdin);
+    removeWhitespaceAndComments(input);
+    return 0;
+	}
