@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 10
+char prod[MAX][MAX], alpha[MAX], beta[MAX], newProd[MAX][MAX];
+int n;
+void removeLeftRecursion() 
+{
+    for (int i = 0; i < n; i++) 
+	{
+        char nt = prod[i][0]; 
+        if (nt == prod[i][2]) 
+		{ 
+            strcpy(alpha, &prod[i][3]); 
+            printf("%c -> %s%c'\n", nt, beta, nt);
+            printf("%c' -> %s%c' | e\n", nt, alpha, nt);
+        } else {
+            strcpy(beta, &prod[i][2]);
+            printf("%s\n", prod[i]);
+        }
+    }
+}
+int main() {
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+    printf("Enter productions:\n");
+    for (int i = 0; i < n; i++)
+        scanf("%s", prod[i]);
+    printf("\nAfter eliminating left recursion:\n");
+    removeLeftRecursion();
+    return 0;
+}
