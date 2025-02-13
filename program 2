@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX_LENGTH 100
+void checkComment(char *line) 
+{
+    if (line[0]=='/'&&line[1]=='/') 
+	{
+        printf("Single-line comment\n");
+    } 
+	else if (line[0]=='/'&&line[1]=='*') 
+	{
+        printf("Multi-line comment\n");
+    } 
+	else 
+	{
+        printf("Not a comment\n");
+    }
+}
+int main() 
+{
+    char input[MAX_LENGTH];
+    printf("Enter a line: ");
+    fgets(input, MAX_LENGTH, stdin);
+    checkComment(input);
+    return 0;
+}
