@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define TABLE_SIZE 10
+typedef struct Symbol 
+{
+    char name[50]; int address; struct Symbol* next;
+} Symbol;
+Symbol* table[TABLE_SIZE];
+int hash(char* name) 
+{
+    int sum = 0; for (int i = 0; name[i]; i++) sum += name[i];
+    return sum % TABLE_SIZE;
+}
+void insert(char* name, int address) 
+{
+    int idx = hash(name);
+    Symbol* newSym = (Symbol*)malloc(sizeof(Symbol));
+    strcpy(newSym->name, name); newSym->address = address;
+    newSym->next = table[idx]; table[idx] = newSym;
+    printf("Inserted: %s at %d\n", name, address);
+}
+Symbol* search(char* name) 
+{
+    for (Symbol* temp = table[hash(name)]; temp; temp = temp->next)
+        if (!strcmp(temp->name, name)) return temp;
+    return NULL;
+}
+void display() 
+{
+    for (int i = 0; i < TABLE_SIZE; i++)
+        for (Symbol* temp = table[i]; temp; temp = temp->next)
+            printf("%s(%d) -> ", temp->name, temp->address);
+    printf("NULL\n");
+}
+int main() 
+{
+    insert("x", 100); insert("y", 200); insert("z", 300);
+    display(); Symbol* found = search("a");
+    printf(found ? "Found: %s at %d\n" : "Not found\n", found->name, found->address);
+    return 0;
+}
