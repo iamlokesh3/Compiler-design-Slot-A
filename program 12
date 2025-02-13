@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+char *input;
+void E(); void T(); void F(); void E_(); void T_();
+void match(char expected) 
+{
+    if (*input == expected) input++;
+    else 
+	{ 
+	printf("Error"); return; 
+	}
+}
+void E() 
+{
+ T(); 
+ E_(); 
+}
+void E_() 
+{ 
+if (*input == '+')
+   { 
+    match('+'); 
+	T(); 
+	E_(); 
+   } 
+}
+void T() 
+{ 
+ F(); 
+ T_(); 
+}
+void T_() 
+{ 
+ if (*input == '*') 
+   { 
+    match('*'); 
+    F(); 
+    T_(); 
+   } 
+}
+void F() 
+{ 
+  if (isalpha(*input)) match(*input); 
+  else 
+   {
+    match('('); 
+    E(); 
+    match(')'); 
+   } 
+}
+int main() {
+    char expr[100];
+    printf("Enter expression: ");
+    scanf("%s", expr);
+    input = expr;
+    E();
+    if (*input == '\0') printf("Parsing successful!\n");
+    else printf("Parsing failed!\n");
+    return 0;
+}
