@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+
+char stack[MAX]; int top = -1;
+char prec[3][3] = {{'>', '>', '<'}, {'>', '>', '<'}, {'>', '>', '>'}};
+int idx(char c) 
+{ 
+    return (c == '+') ? 0 : (c == '*') ? 1 : (c == 'i') ? 2 : -1; 
+}
+void push(char c) 
+{
+    stack[++top] = c; 
+}
+void pop() 
+{ 
+    if (top >= 0) top--; 
+}
+
+void parse(char *inp) 
+{
+    int i = 0; push('$'); printf("Stack\tInput\n");
+    while (inp[i] != '\0') 
+	{
+        int ti = idx(stack[top]), ci = idx(inp[i]);
+        if (ti != -1 && ci != -1 && prec[ti][ci] == '<') push(inp[i++]);
+        else if (ti != -1 && ci != -1 && prec[ti][ci] == '>') pop();
+        else { printf("Parsing failed!\n"); return; }
+        printf("%s\t%s\n", stack, inp + i);
+    }
+    printf("Parsing successful!\n");
+}
+
+int main() 
+{
+    char input[MAX];
+    printf("Enter expression: "); scanf("%s", input);
+    parse(input); return 0;
+}
