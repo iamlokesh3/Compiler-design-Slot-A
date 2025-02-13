@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <ctype.h>
+#define MAX 10
+char prod[MAX][MAX];
+int n;
+void findFirst(char c) 
+{
+    if (!isupper(c)) 
+	{  
+        printf("%c ", c);
+        return;
+    }
+    for (int i = 0; i < n; i++) 
+	{
+        if (prod[i][0] == c) 
+		{
+            if (!isupper(prod[i][2]) || prod[i][2] == 'e') 
+                printf("%c ", prod[i][2]);
+            else 
+                findFirst(prod[i][2]);  
+        }
+    }
+}
+int main() 
+{
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+
+    printf("Enter productions:\n");
+    for (int i = 0; i < n; i++)
+        scanf("%s", prod[i]);
+
+    printf("\nFIRST sets:\n");
+    for (int i = 0; i < n; i++) 
+	{
+        printf("FIRST(%c) = { ", prod[i][0]);
+        findFirst(prod[i][0]);
+        printf("}\n");
+    }
+    return 0;
+}
