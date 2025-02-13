@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#define MAX_LENGTH 100
+void identifyOperators(char *line) 
+{
+    int i = 0;
+    while (line[i] != '\0') 
+	{
+        if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '/') 
+		{
+            printf("Operator found: %c\n", line[i]);
+        }
+        i++;
+    }
+}
+int main() 
+{
+    char input[MAX_LENGTH];
+    printf("Enter an expression: ");
+    fgets(input, MAX_LENGTH, stdin);
+    identifyOperators(input);
+    return 0;
+}
