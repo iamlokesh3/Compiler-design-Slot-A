@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#define MAX_LENGTH 100
+void identifyToken(char*token) 
+{
+    if (isdigit(token[0])) 
+	{
+        printf("Constant: %s\n",token);
+    } else if (isalpha(token[0])||token[0]=='_') 
+	{
+        printf("Identifier: %s\n",token);
+    } else {
+        printf("Operator: %s\n",token);
+    }
+}
+int main() 
+{
+    char input[MAX_LENGTH];
+    printf("Enter an expression: ");
+    fgets(input,MAX_LENGTH,stdin);
+
+    char*token=strtok(input," \t\n");
+    while(token!=NULL) 
+	{
+        identifyToken(token);
+        token=strtok(NULL," \t\n");
+    }
+    return 0;
+}
